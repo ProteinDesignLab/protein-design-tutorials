@@ -1,4 +1,4 @@
-These are some new-user-friendly, slightly more detailed explanations of some key Remodel flags. If you know how to use a flag that's not here, please add it with a short description of what it is and how to use it. You can see all the possible Rosetta flags and options in your Rosetta build directory at `/main/source/src/basic/options/options_rosetta.py`.
+These are some new-user-friendly, slightly more detailed explanations of some key Remodel flags. If you know how to use a flag that's not here, please add it with a short description of what it is and how to use it. You can see all the possible Rosetta flags and options [here on RosettaCommons](https://www.rosettacommons.org/docs/latest/full-options-list), or in your Rosetta build directory at `/main/source/src/basic/options/options_rosetta.py`.
 
 *-use_blueprint_sequence*. Bias backbone fragment sampling towards fragments that match the sequence defined in blueprint column 2.  
 *-symmetry_definition [filename]*. Allow you to pass a sym def file to build symmetric structures.  
