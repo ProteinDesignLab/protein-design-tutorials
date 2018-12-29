@@ -1,7 +1,9 @@
 # Remodel Overview
 Created Dec 2018 by Alex Chu. Last updated 181228 AEC
 
-RosettaRemodel is an app/executable in the Rosetta macromolecular modeling suite, which was developed originally in [the David Baker lab]() and is one of the most comprehensive, advanced software suites for biomolecular modeling. The docs for Rosetta, including RosettaRemodel, are very good and comprehensive and we don't intend to replace them - in fact, we'll refer to them frequently.
+This is an overview of the key concepts underlying RosettaRemodel. RosettaRemodel is an app/executable in the Rosetta macromolecular modeling suite, which was developed originally in [the David Baker lab]() and is one of the most comprehensive, advanced software suites for biomolecular modeling. RosettaRemodel is one of the main apps in that framework for protein design. The docs for Rosetta, including RosettaRemodel, are very good and comprehensive and we don't intend to replace them - in fact, we'll refer to them frequently.
+
+## The Remodel workflow
 
 Remodel basically combines three main functions from Rosetta into a single app. These are backbone remodeling, sequence design, and relax/minimization. At any point, you might be using anywhere from one to all three of these functions in a single job. 
 
@@ -26,11 +28,13 @@ Here is a "subway map" for Remodel. It shows the workflow for the three function
 
 ![Remodel Subway Map]()
 
-jd2:no_output.
+## Blueprint syntax
 
-This may seem like a lot. You should check out one of the step-by-step tutorials to see examples of what flags you might use and how to actually carry out one of these simulations.
+## Some notes about implementation
 
-### A little basic under-the-hood detail, if you're interested
+jd2:no_output. Blueprint syntax.
+
+## Some basic under-the-hood detail
 
 You also might be wondering how exactly Rosetta picks fragments or places sidechains. Nearly all of the hard computational work in Rosetta is done with method called Monte Carlo sampling. The algorithm works like this:
 
