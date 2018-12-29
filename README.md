@@ -3,6 +3,7 @@ We've assembled some cheat sheets, references, and tutorials for learning to use
 
 [RosettaRemodel Docs](https://www.rosettacommons.org/docs/latest/application_documentation/design/rosettaremodel)  
 [Old Remodel Docs & Tutorial](https://www.rosettacommons.org/manuals/archive/rosetta3.4_user_guide/d1/d8c/remodel.html)  
+[Rosetta 3 Forums](https://www.rosettacommons.org/forums/rosetta-3)  
 [Remodel Flags & Options](https://www.rosettacommons.org/docs/latest/full-options-list)  
 [General Remodel Tutorial](https://www.rosettacommons.org/docs/latest/application_documentation/design/Remodel)  
 [Stanford Rosetta Workshop](http://2016.rosetta.ninja/day-3/rosettaremodel-basic-tutorial)  
