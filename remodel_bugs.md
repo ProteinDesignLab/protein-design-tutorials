@@ -8,3 +8,4 @@ There isn't a good stackoverflow/stackexchange-type resource for RosettaRemodel,
 **Assert \`start > 0\` failed**. When inserting a pdb structure into another one with Remodel, cannot allow the first 1-2 residues to be flexible. This may be caused only by repeat mode. Fix: Set first two residues to “.” in the blueprint.  
 **failure to read decoy S_00001_0000308_0 from silent-file *_fold_*.all.out**. All.out files were corrupted and contained W_000* files, which had a different number of energy values in the header and hence the 'I have 31 energy names but I have 25 energy values.’ message. Fix: delete all lines containing W_000 from the file.  
 **Loop closure e.g. “* 0 / 1   closed / attempts”**. This can be due to many things. If you have many loops you are trying to build  
+**ERROR: Scorefunction not set up for nonideal/Cartesian scoring**. Fix: set the flag `-score:set_weights pro_close 0`.  
