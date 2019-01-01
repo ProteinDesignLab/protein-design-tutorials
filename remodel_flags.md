@@ -33,3 +33,4 @@ loop closure done with random chain breaks, then CCD or KIC; only models with cl
 *-soft_rep_design*. Lessens repulsion scorefunction terms during design to allow bigger sidechains to be sampled in the core.  
 *-core_cutoff [int usu 16 or so]*. The minimum number of neighbors a residue must have to be considered a hydrophobic core residue.  
 *-boundary_cutoff [int usu 15 or so]*. The maximum number of neighbors a residue can have to be considered a solvent exposed residue.  
+**`-score:set_weights [scorefxn term] [float]`**. Change the weights for the Rosetta energy function for your sampling run. You will need to choose which energy term and the new weight, for example `-score:set_weights hbond_lr_bb 2.0 pro_close 0.0`. See a list of [scorefxn energy terms](https://www.rosettacommons.org/docs/latest/rosetta_basics/scoring/score-types).  
