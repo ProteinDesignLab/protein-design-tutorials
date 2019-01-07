@@ -16,4 +16,4 @@ Most of the documents in this repository are written in Markdown - [here is a qu
 `remodel_overview.md` An introduction to RosettaRemodel, how it works, and some basic knowledge that will be useful in learning to use it. __**Start here if you are new to this repository!**__  
 `remodel_flags.md` A newbie-friendly list of the most commonly used flags in RosettaRemodel.    
 `remodel_bugs.md` A kind of Stack Overflow for RosettaRemodel. Adding bugs and fixes to this list will hopefully save everyone time in the long run!   
-`de_novo_design` A step-by-step tutorial for de novo protein design using Rosetta fragment sampling.    
+`de_novo_design/` A step-by-step tutorial for de novo protein design using Rosetta fragment sampling.    
