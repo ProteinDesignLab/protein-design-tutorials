@@ -1,4 +1,4 @@
-# remodel-tutorials
+# protein-design-tutorials
 We've assembled some cheat sheets, references, and tutorials for learning to use RosettaRemodel as a command line executable here in this repo. They're meant to supplement, not replace, the documentation kept at RosettaCommons, which is already very well developed. There probably isn't much here that isn't there already, but hopefully this assembles some of the most important knowledge to get you up and running ASAP.
 
 [RosettaRemodel Docs](https://www.rosettacommons.org/docs/latest/application_documentation/design/rosettaremodel)  
