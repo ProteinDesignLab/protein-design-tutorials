@@ -11,7 +11,7 @@ Remodel basically combines three main functions from Rosetta into a single app. 
 
 At this stage, the amino acid sequence (sidechains) are not super important. If you only use this function of Remodel, you might be surprised to see that your output structure is all valines; this is because Rosetta doesn't explicitly model all the sidechains in backbone mode. To make it computationally easier, it replaces all the sidechains with blobs, or "centroids," that are supposed to resemble the "average" sidechain. At output time, these centroids are saved to PDBs as valines.
 
-![Torsional angles, J Richardson]()
+![Protein torsional angles](~/images/phi_psi_torsional_diagram.jpg)
 
 **Sequence design** is the second stage that involves placing sidechains once you have a defined backbone. core/boundary, resfile, sasa.
 
@@ -26,7 +26,7 @@ Here is a "subway map" for Remodel. It shows the workflow for the three function
 - Then it proceeds to the relax stage, where you can choose what kind of relax algorithm (e.g. `-use_pose_relax` or `-use_cart_relax`) you want to run on the structure.
 - Remodel then repeats the previous two steps by default 3 times, which you can change using `-remodel:dr_cycles [int]`, and saves the output files when you
 
-![Remodel Subway Map]()
+![Remodel Subway Map](images/RemodelSubwayMap.pdf)
 
 ## Blueprint syntax
 
