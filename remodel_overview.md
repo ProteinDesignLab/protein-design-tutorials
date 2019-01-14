@@ -11,7 +11,7 @@ Remodel basically combines three main functions from Rosetta into a single app. 
 
 At this stage, the amino acid sequence (sidechains) are not super important. If you only use this function of Remodel, you might be surprised to see that your output structure is all valines; this is because Rosetta doesn't explicitly model all the sidechains in backbone mode. To make it computationally easier, it replaces all the sidechains with blobs, or "centroids," that are supposed to resemble the "average" sidechain. At output time, these centroids are saved to PDBs as valines.
 
-![Protein torsional angles](~/images/phi_psi_torsional_diagram.jpg)
+![Protein torsional angles](images/phi_psi_torsional_diagram.jpg)
 
 **Sequence design** is the second stage that involves placing sidechains once you have a defined backbone. core/boundary, resfile, sasa.
 
