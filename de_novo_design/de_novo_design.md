@@ -53,14 +53,18 @@ Once you have an ideal backbone structure, you can proceed to sequence design. F
 First, classify each residue as a core, boundary, or surface residue. Core residues are those which participate in hydrophobic packing. Surface residues are solvent-exposed. Boundary residues are the hardest to define and are basically those residues which are not obviously core or surface. In the blueprint, design core residues to APOLAR, surface residues to PIKAA A (postponing surface design until later), and boundary residues to ALLAAxc. For example, for the TIM barrel, the beginning of your blueprint might look like this:
 ```
 1 A L PIKAA A
-2 V E ALLAAxc
-3 V E APOLAR
-4 V E APOLAR
-5 V E APOLAR
-6 V E APOLAR
+2 V L ALLAAxc
+3 V L APOLAR
+4 V L APOLAR
+5 V L APOLAR
+6 V L APOLAR
 7 V L ALLAAxc
 8 V L PIKAA A
 ...
+```
+At this stage, we set the Ramachandran space to "L" so that the protein relaxes smoothly. You should use these flags:
+```
+todo
 ```
 Run a large number of trajectories, ~1e3, and generate a sequence logo from your output (imagine all your outputs as a multiple sequence alignment). There are a few ways to do this, but one is to gather your output structures into a directory, copy `get_sequence_from_pdb.py` from the `essentials_kit` repository, run it in the directory, and then use the output `sequence_list.txt` on a web server, e.g. [https://weblogo.berkeley.edu/logo.cgi](https://weblogo.berkeley.edu/logo.cgi), to generate it for you. Looking at this sequence logo will help you see which residues are selected more frequently at different positions, and perhaps more helpfully, not selected at all. This allows you to go back and "iteratively enrich" your sequences for the "right" residues. For example, if you generated this logo plot from using the blueprint above:  
 
