@@ -1,7 +1,7 @@
 # Remodel Overview
 Created Dec 2018 by Alex Chu. Last updated 181228 AEC
 
-This is an overview of the key concepts underlying RosettaRemodel. RosettaRemodel is an app/executable in the Rosetta macromolecular modeling suite, which was developed originally in [the David Baker lab]() and is one of the most comprehensive, advanced software suites for biomolecular modeling. RosettaRemodel is one of the main apps in that framework for protein design. The docs for Rosetta, including RosettaRemodel, are very good and comprehensive and we don't intend to replace them - in fact, we'll refer to them frequently.
+This is an overview of the key concepts underlying RosettaRemodel. RosettaRemodel is an app/executable in the Rosetta macromolecular modeling suite, which was developed originally in [the David Baker lab](https://www.bakerlab.org/) and is one of the most comprehensive, advanced software suites for biomolecular modeling. RosettaRemodel is one of the main apps in that framework for protein design. The docs for Rosetta, including RosettaRemodel, are very good and comprehensive and we don't intend to replace them - in fact, we'll refer to them frequently.
 
 ## The Remodel workflow
 
@@ -17,7 +17,7 @@ At this stage, the amino acid sequence (sidechains) are not super important. If 
 
 **Relax** (also called refine or minimization) is a final energy minimization step that is carried out once you have a complete structure (backbone + sidechains). It's like when you scoop flour into a cup and shake it around a little to make sure any air pockets collapse and extra stuff falls away, so it all fits together nicely.
 
-Here is a "subway map" for Remodel. It shows the workflow for the three functions/modes just discussed, and some of the common flags that might be used at each step. At the end of the day, you actually run Remodel by running (on the command line) the executable `/path/to/remodel.linuxgccrelease` and giving it your a number of arguments. These arguments/flags/options allow you to give Remodel input structures, and blueprints and instructions for whether and how you want Remodel to do backbone, design, and/or relax on your structure.
+Here is a "subway map" for Remodel. It shows the workflow for the three functions/modes just discussed, and some of the common flags that might be used at each step. At the end of the day, you actually run Remodel by running (on the command line) the executable `/path/to/remodel.linuxgccrelease` (replace `/path/to` with the path to the directory where your Rosetta executables are) and giving it your a number of arguments. These arguments/flags/options allow you to give Remodel input structures, and blueprints and instructions for whether and how you want Remodel to do backbone, design, and/or relax on your structure.
 
 - First you provide your input PDB structure and blueprint, and maybe some constraint or symmetry definition files. 
 - Next it enters backbone stage, where it does fragment sampling and loop closure, and which should give you a complete backbone (you can skip this step with `-bypass_fragments` or `-bypass_closure`). 
