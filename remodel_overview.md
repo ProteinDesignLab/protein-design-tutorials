@@ -7,15 +7,18 @@ This is an overview of the key concepts underlying RosettaRemodel. RosettaRemode
 
 Remodel basically combines three main functions from Rosetta into a single app. These are backbone remodeling, sequence design, and relax/minimization. At any point, you might be using anywhere from one to all three of these functions in a single job. 
 
-**Backbone remodeling** refers to altering the secondary structure (SS), or phi-psi torsional angles of the peptide backbone. Varying these phi-psi angles is what lets you define a segment of residues as an alpha helix, or a beta strand, or a loop. Remodel does this by fragment sampling: taking out the part of your protein you are trying to remodel, randomly taking protein "fragments," or small segments of native proteins structures from the PDB, and trying to stick them into your structure. If they stick nicely, then it keeps it there. If it doesn't, it tries again. If you have a discontinuity in the backbone (called a chainbreak), say if you are remodeling a chunk in the middle of your protein, it will try to close this break with fragment sampling and closure algorithms like CCD or KIC.
+### Backbone remodeling
+Backbone remodeling refers to altering the secondary structure (SS), or phi-psi torsional angles of the peptide backbone. Varying these phi-psi angles is what lets you define a segment of residues as an alpha helix, or a beta strand, or a loop. Remodel does this by fragment sampling: taking out the part of your protein you are trying to remodel, randomly taking protein "fragments," or small segments of native proteins structures from the PDB, and trying to stick them into your structure. If they stick nicely, then it keeps it there. If it doesn't, it tries again. If you have a discontinuity in the backbone (called a chainbreak), say if you are remodeling a chunk in the middle of your protein, it will try to close this break with fragment sampling and closure algorithms like CCD or KIC.
 
 At this stage, the amino acid sequence (sidechains) are not super important. If you only use this function of Remodel, you might be surprised to see that your output structure is all valines; this is because Rosetta doesn't explicitly model all the sidechains in backbone mode. To make it computationally easier, it replaces all the sidechains with blobs, or "centroids," that are supposed to resemble the "average" sidechain. At output time, these centroids are saved to PDBs as valines.
 
 ![Protein torsional angles](images/phi_psi_torsional_diagram.jpg)
 
-**Sequence design** is the second stage that involves placing sidechains once you have a defined backbone. core/boundary, resfile, sasa.
+### Sequence design
+Sequence design is the second stage that involves placing sidechains once you have a defined backbone. core/boundary, resfile, sasa.
 
-**Relax** (also called refine or minimization) is a final energy minimization step that is carried out once you have a complete structure (backbone + sidechains). It's like when you scoop flour into a cup and shake it around a little to make sure any air pockets collapse and extra stuff falls away, so it all fits together nicely.
+### Refinement
+Relax (also called refinement or minimization) is a final energy minimization step that is carried out once you have a complete structure (backbone + sidechains). It's like when you scoop flour into a cup and shake it around a little to make sure any air pockets collapse and extra stuff falls away, so it all fits together nicely.
 
 Here is a "subway map" for Remodel. It shows the workflow for the three functions/modes just discussed, and some of the common flags that might be used at each step. At the end of the day, you actually run Remodel by running (on the command line) the executable `/path/to/remodel.linuxgccrelease` (replace `/path/to` with the path to the directory where your Rosetta executables are) and giving it your a number of arguments. These arguments/flags/options allow you to give Remodel input structures, and blueprints and instructions for whether and how you want Remodel to do backbone, design, and/or relax on your structure.
 
