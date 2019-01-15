@@ -121,7 +121,7 @@ First, classify each residue as a core, boundary, or surface residue. Core resid
 ...
 ```
 Run a large number of trajectories, ~1e3, and generate a sequence logo from your output (imagine all your outputs as a multiple sequence alignment). There are a few ways to do this, but one is to gather your output structures into a directory, copy `get_sequence_from_pdb.py` from the `essentials_kit` repository, run it in the directory, and then use the output `sequence_list.txt` on a web server, e.g. [https://weblogo.berkeley.edu/logo.cgi](https://weblogo.berkeley.edu/logo.cgi), to generate it for you. Looking at this sequence logo will help you see which residues are selected more frequently at different positions, and perhaps more helpfully, not selected at all. This allows you to go back and "iteratively enrich" your sequences for the "right" residues. For example, if you generated this logo plot from using the blueprint above:
-![example_sequence_logo.png](../images/example_sequence_logo.png)
+![example_sequence_logo.png](../images/.png)
 you might go back and edit your blueprint like so:
 ```
 1 A L PIKAA A
