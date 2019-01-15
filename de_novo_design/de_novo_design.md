@@ -23,6 +23,7 @@ De novo design in this framework begins by specifying a protein backbone, i.e. f
 -num_trajectory 10
 -save_top 5
 ```
+`jd2:no_output` suppresses output from the standard Rosetta job distributor in favor of the Remodel-specific output.  
 `-overwrite` means that any old files with the same names as the output files will be overwritten.  
 `-remodel:design:no_design` and `-remodel:quick_and_dirty` let us skip the design and refinement stages, respectively.  
 `-repeat_structure 4` indicates that Rosetta should repeat the input four times. Here, since the input blueprint specifies just one of the four repeats (beta-alpha)-2; this flag completes the other three repeats.  
@@ -30,9 +31,13 @@ De novo design in this framework begins by specifying a protein backbone, i.e. f
 `-num_trajectory 10` means that we want to run 10 Monte Carlo trajectories, and `-save_top 5` means to save and output only the top 5 scoring results by Rosetta energy.  
 
 With these starting arguments, and all of the above files in the same directory, we can begin a sampling run:  
-`/path/to/remodel.linuxgccrelease @flags`  
+```
+/path/to/remodel.linuxgccrelease @flags
+```  
 Replace `/path/to` with the path to the directory where your Rosetta executables are. If you add the path to your Rosetta executables to your bash profile, you can simply run  
-`remodel.linuxgccrelease @flags`  
+```
+remodel.linuxgccrelease @flags
+```  
 
 When the run is finished, you should have five new files in your directory, named `1.pdb`, `2.pdb`, and so on. These are your results! Open them in PyMOL and see which ones fit your target fold the best. Since we are only doing backbone design here, your sequence will be all valines (see [remodel_overview.md](https://github.com/ProteinDesignLab/protein-design-tutorials/blob/master/remodel_overview.md#backbone-remodeling) for an explanation of why). With our current run, you should look for structures that form a TIM-barrel like structure.  
 
