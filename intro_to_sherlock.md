@@ -82,7 +82,12 @@ You can also run Jupyter notebooks on Sherlock by port-forwarding the notebook i
 srun remodel.linuxgccrelease @flags
 ```
 
-## How to move files between Sherlock and your local machine
+## Filesystems and file transfer between Sherlock and your local machine
+The Sherlock filesystem can seem easy to get lost in at first sight. The main drives that you will spend most of your time on are `/home/` and `/scratch/`.
+- `/home/users/[SUNet ID]/` is your home directory. This is where `~/` points to, where your bash profile lives, and where you can keep most of your storage and files.
+- `/scratch/users/[SUNet ID]/` is your scratch directory (like scratch paper). Your `$SCRATCH` variable points here, and this is where you should do most of your work, because read/write speeds are much faster on this drive than on the home directory. However, Sherlock automatically archives files on scratch that are older than 6 months, so you'll have to either `touch` your files to keep them updated, or port them over to your home directory to hold on to them.  
+- `/scratch/PI/possu/` is our group scratch directory. It's easy to keep things here that the group uses, or that you want to share with the group. We also usually build Rosetta here, which means it occasionally gets archived by the Sherlock scratch gobbler (and needs to be rebuilt).  
+
 At some point, you will want to move files between Sherlock and your local machine. There are two main ways for doing this:
 - `scp` - This is the simplest and fastest for single files. You can use the `scp` Linux command in the same way you would use the `cp` command, except you will need to authenticate. The syntax would be `scp [SUNet ID]@login.sherlock.stanford.edu:[/path/to/file] [/path/to/save]`, and you can also copy from your local machine to Sherlock by switching the order of the two arguments.  
 - `sshfs` aka OSXFUSE. This is the most convenient, as it allows you to manage the filesystem on Sherlock as if it were just in a directory on your local machine, but can sometimes be slow. You can [download it here](https://osxfuse.github.io/) and once it's installed, you can "mount" any of your Sherlock directories on your local computer with `sshfs [sunetid]@login.sherlock.stanford.edu:[/path/to/Sherlock/dir/] [/path/to/local/dir/]`. Detailed instructions for setup are [here](https://www.sherlock.stanford.edu/docs/storage/data-transfer/#sshfs).  
