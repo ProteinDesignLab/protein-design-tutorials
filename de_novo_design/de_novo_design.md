@@ -64,8 +64,28 @@ First, classify each residue as a core, boundary, or surface residue. Core resid
 ```
 At this stage, we set the Ramachandran space to "L" so that the protein relaxes smoothly. You should use these flags:
 ```
-todo
+-s [your structure].pdb
+-remodel:blueprint [your blueprint].bp
+-jd2:no_output
+-overwrite
+-repeat_structure 4
+-remodel:RemodelLoopMover:cyclic_peptide
+-hb_lrbb 2.0 
+-randomize_loops false
+-bypass_fragments
+-bypass_closure
+-remodel:use_pose_relax
+-remodel:dr_cycles 3
+-soft_rep_design
+-no_optH false
+-ex1
+-ex2
+-linmem_ig 10
+-num_trajectory 1
+-save_top 1
 ```
+`-remodel:use_pose_relax` defines the relax protocol that is used. Relax can be slow, so if you're in a hurry, replace this flag with `-remodel:quick_and_dirty`, which bypasses relax. `-remodel:dr_cycles 3` indicates that you want to go through three rounds of sequence Design and Refinement/Relax; you can also change this to 1 if you want to cut down on sampling time. `-soft_rep_design` temporarily reduces the repulsion term of the Rosetta scorefunction during design, which makes less difficult to place larger side chains in buried positions. `-no_optH false`, `-ex1`, and `-ex2` deal with rotamer sampling and typically included in Rosetta sequence design. You can leave out `-ex1` and `-ex2` if you want to cut down on sampling time. `-linmem_ig 10` helps reduce memory usage, but at the cost of increased sampling time, and can also be left out.  
+
 Run a large number of trajectories, ~1e3, and generate a sequence logo from your output (imagine all your outputs as a multiple sequence alignment). There are a few ways to do this, but one is to gather your output structures into a directory, copy `get_sequence_from_pdb.py` from the `essentials_kit` repository, run it in the directory, and then use the output `sequence_list.txt` on a web server, e.g. [https://weblogo.berkeley.edu/logo.cgi](https://weblogo.berkeley.edu/logo.cgi), to generate it for you. Looking at this sequence logo will help you see which residues are selected more frequently at different positions, and perhaps more helpfully, not selected at all. This allows you to go back and "iteratively enrich" your sequences for the "right" residues. For example, if you generated this logo plot from using the blueprint above:  
 
 ![example sequence logo](../images/example_sequence_logo.png)  
