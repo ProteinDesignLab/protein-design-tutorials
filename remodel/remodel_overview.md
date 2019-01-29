@@ -29,7 +29,7 @@ Here is a "subway map" for Remodel. It shows the workflow for the three function
 - Then it proceeds to the relax stage, where you can choose what kind of relax algorithm (e.g. `-use_pose_relax` or `-use_cart_relax`) you want to run on the structure.
 - Remodel then repeats the previous two steps by default 3 times, which you can change using `-remodel:dr_cycles [int]`, and saves the output files when you
 
-![Remodel Subway Map](images/RemodelSubwayMap.png)
+![Remodel Subway Map](/images/RemodelSubwayMap.png)
 
 ## Blueprint syntax
 
