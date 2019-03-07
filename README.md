@@ -31,7 +31,7 @@ Key concepts include:
 2. Movers (anything that manipulate a pose, you can identify movers by the ".apply()" method)
 3. Movemaps (create MoveMap() objects to specify conditions for minimization)
 4. TaskFactory (create TaskFactory() objects to specify conditions for packing)
-5. FastRelax (use your specified minimization and packing constraints to run repeated iterations of relax with FastDesign())
+5. FastRelax (use your specified minimization and packing constraints to run repeated iterations with FastDesign())
 6. ResidueSelector (select particular residues to specify for packing or other applications with Movers in the residue_selector class)
 
 as well as much more!
