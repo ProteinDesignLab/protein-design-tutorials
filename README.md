@@ -24,4 +24,25 @@ We've assembled some cheat sheets, references, and tutorials for learning to use
 [Disulfide Design Tutorial](https://www.rosettacommons.org/docs/latest/application_documentation/design/rosettaremodel#algorithm_disulfide-design)  
 
 ### Pyrosetta 
-TODO Andres
+The Pyrosetta tutorial illustrates methods to manipulate pdb files, quickly extract and parse energy information, and contains a full representative example of docking two proteins in Pyrosetta. 
+
+Key concepts include:
+1. the Pose object (a pose contains various methods to extract protein info. including ".pdb_info()")
+2. Movers (anything that manipulate a pose, you can identify movers by the ".apply()" method)
+3. Movemaps (create MoveMap() objects to specify conditions for minimization)
+4. TaskFactory (create TaskFactory() objects to specify conditions for packing)
+5. FastRelax (use your specified minimization and packing constraints to run repeated iterations of relax with FastDesign())
+6. ResidueSelector (select particular residues to specify for packing or other applications with Movers in the residue_selector class)
+as well as much more!
+
+To download Pyrosetta make sure to use a conda environment to create an isolated virtual environment (i.e. install Anaconda3 https://www.anaconda.com/download/). Then go into terminal:
+1. 'conda install anaconda-client'
+2. 'anaconda login'
+3. sign into account ( i.e. for Baker lab: Username: bakerlab, Password: BakerG00d)
+3. 'conda env create -f pyrosetta-packages.yml'
+4. In the ~/.bashrc and ~/.profile files, comment out any lines with `export PYTHONPATH=...`
+5. `source ~/.bashrc` or `source ~/.profile'
+6. `conda activate pyrosetta-packages`
+
+
+
