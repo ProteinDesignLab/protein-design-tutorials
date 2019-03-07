@@ -33,6 +33,7 @@ Key concepts include:
 4. TaskFactory (create TaskFactory() objects to specify conditions for packing)
 5. FastRelax (use your specified minimization and packing constraints to run repeated iterations of relax with FastDesign())
 6. ResidueSelector (select particular residues to specify for packing or other applications with Movers in the residue_selector class)
+
 as well as much more!
 
 To download Pyrosetta make sure to use a conda environment to create an isolated virtual environment (i.e. install Anaconda3 https://www.anaconda.com/download/). Then go into terminal:
@@ -44,5 +45,5 @@ To download Pyrosetta make sure to use a conda environment to create an isolated
 5. `source ~/.bashrc` or `source ~/.profile'
 6. `conda activate pyrosetta-packages`
 
-
+note: you can find pyrosetta-packages.yml in the PyRosetta folder
 
