@@ -1,0 +1,34 @@
+name: pyrosetta-packages
+channels:
+  - rmg
+  - conda-forge
+  - schrodinger
+  - rdkit
+  - ambermd
+  - openbabel
+dependencies:
+  - python=3.6
+  - ipython
+  - jupyter
+  - ipykernel
+  - numpy
+  - pandas
+  - scipy
+  - biopython
+  - seaborn
+  - python-blosc
+  - rosettacommons::pyrosetta
+  - dask
+  - distributed
+  - virtualenv
+  - matplotlib
+  - xlrd
+  - dask-jobqueue
+  - pymol
+  - python-graphviz
+  - ipyparallel
+  - rdkit
+  - ambertools
+  - openbabel
+  - pip:
+      - py3Dmol
