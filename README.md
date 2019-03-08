@@ -11,6 +11,7 @@ We've assembled some cheat sheets, references, and tutorials for learning to use
 [remodel_overview.md](https://github.com/ProteinDesignLab/protein-design-tutorials/blob/master/remodel/remodel_overview.md) - An introduction to RosettaRemodel, how it works, and some basic knowledge that will be useful in learning to use it. **Start here if you are new to to Remodel!**  
 [remodel_flags.md](https://github.com/ProteinDesignLab/protein-design-tutorials/blob/master/remodel/remodel_flags.md) - A newbie-friendly list of the most commonly used flags in RosettaRemodel.   
 [remodel_bugs.md](https://github.com/ProteinDesignLab/protein-design-tutorials/blob/master/remodel/remodel_bugs.md) - A kind of Stack Overflow for RosettaRemodel. Adding bugs and fixes to this list will hopefully save everyone time in the long run!   
+[remodel101.pdf](https://github.com/ProteinDesignLab/protein-design-tutorials/blob/master/remodel/remodel101.pdf) - A set of slides with some introductory information about RosettaRemodel.   
 [de_novo_design/](https://github.com/ProteinDesignLab/protein-design-tutorials/tree/master/remodel/de_novo_design) - A step-by-step tutorial for de novo protein design using Rosetta fragment sampling.   
 
 **External Resources**  
