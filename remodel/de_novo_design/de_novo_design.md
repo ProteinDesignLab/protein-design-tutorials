@@ -48,7 +48,7 @@ Since these are Monte Carlo solutions, you aren't guaranteed that any of these s
 When selecting ideal backbone structures, you should look for 1) correct topology, as in whether the helices and strands are positioned correctly relative to each other, and 2) clean loops, as in loops where the backbone hydrogen bonds (C=O and N-H) are largely satisfied and the torsional angles are in permitted regions of Ramachandran space. 
 
 ### 2. Sequence design
-Once you have an ideal backbone structure, you can proceed to sequence design. For this kind of problem, we will use an approach known as "iterative enrichment." This means we will partition the design problem into more manageable subproblems by restricting the sequence search space at each stage of design.  
+Once you have an ideal backbone structure, you can proceed to sequence design. If you weren't able to get a good peptide backbone for the de novo TIM barrel in Part 1, we have included one in the directory (`TIMbarrel_centroid_backbone.pdb`). For this kind of problem, we will use an approach known as "iterative enrichment." This means we will partition the design problem into more manageable subproblems by restricting the sequence search space at each stage of design.  
 
 First, classify each residue as a core, boundary, or surface residue. Core residues are those which participate in hydrophobic packing. Surface residues are solvent-exposed. Boundary residues are the hardest to define and are basically those residues which are not obviously core or surface. In the blueprint, design core residues to APOLAR, surface residues to PIKAA A (postponing surface design until later), and boundary residues to ALLAAxc. For example, for the TIM barrel, the beginning of your blueprint might look like this:
 ```
