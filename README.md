@@ -13,6 +13,7 @@ We've assembled some cheat sheets, references, and tutorials for learning to use
 [remodel_bugs.md](https://github.com/ProteinDesignLab/protein-design-tutorials/blob/master/remodel/remodel_bugs.md) - A kind of Stack Overflow for RosettaRemodel. Adding bugs and fixes to this list will hopefully save everyone time in the long run!   
 [remodel101.pdf](https://github.com/ProteinDesignLab/protein-design-tutorials/blob/master/remodel/remodel101.pdf) - A set of slides with some introductory information about RosettaRemodel.   
 [de_novo_design/](https://github.com/ProteinDesignLab/protein-design-tutorials/tree/master/remodel/de_novo_design) - A step-by-step tutorial for de novo protein design using Rosetta fragment sampling.   
+[ss_remodeling/](https://github.com/ProteinDesignLab/protein-design-tutorials/tree/master/remodel/ss_remodeling) - A similar tutorial, but for remodeling a segment of protein structure.
 
 **External Resources**  
 [RosettaRemodel Docs](https://www.rosettacommons.org/docs/latest/application_documentation/design/rosettaremodel)  
