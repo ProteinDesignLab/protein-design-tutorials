@@ -1,7 +1,11 @@
 # De novo design with RosettaRemodel
 Created Dec 2018 by Alex Chu. Last updated 190114 AEC  
 
-This is a step by step tutorial to de novo protein design in RosettaRemodel. There are other methods for de novo design, such as parametric geometry sampling as in [this paper](), but this tutorial is an introduction to de novo design with Rosetta fragment sampling. This tutorial assumes some basic knowledge of how RosettaRemodel works, i.e. some of what is discussed in `remodel_overview.md`. If some of the terms or concepts in here aren't familiar to you yet, you should begin there.
+This is a step by step tutorial to de novo protein design with fragment sampling in RosettaRemodel. 
+
+### 0. Prerequisites
+- You should have a working build of RosettaRemodel, so that you can run the `remodel.linuxgccrelease` executables (or similar looking ones). If you have access to Sherlock, the Stanford HPC cluster, and have been added to the `possu` group, then the executables should be in `$PI_HOME/working_build/190322_standard/Rosetta/main/source/bin/`. If this didn't make any sense to you, you should read the [Slurm/Sherlock tutorial](https://github.com/ProteinDesignLab/protein-design-tutorials/blob/master/intro_to_sherlock.md).
+- This tutorial relies on some basic knowledge of how RosettaRemodel works, i.e. some of what is discussed in [Remodel Overview](https://github.com/ProteinDesignLab/protein-design-tutorials/blob/master/remodel/remodel_overview.md). If some of the terms or concepts in here aren't familiar to you yet, you can refer to that document.
 
 ### 1. Backbone design
 De novo design in this framework begins by specifying a protein backbone, i.e. folded secondary structures, onto which sequences can be designed. To start, you'll need a stub PDB of alanine or some other residue, which we've provided in `ala.pdb`, and a blueprint specifying the fold you want, which we've provided in `de_novo.bp`. In this tutorial, let's build the fourfold repeat TIM barrel from [Huang et al](https://www.nature.com/articles/nchembio.1966). Then the blueprint specifies the fold of one of the four repeats, which is a beta-alpha-beta-alpha motif. Now, let's specify some of the arguments we want Remodel to take, and save these in a file called `flags`:
