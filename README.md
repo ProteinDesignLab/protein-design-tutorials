@@ -1,5 +1,7 @@
 # protein-design-tutorials
-This is a collection for all of the tutorials/resources for learning to use Rosetta and the other computational methods we use in our work. Please feel free to edit and update if you see old or incorrect info, even if you are new to the lab (sometimes new people bring the best insights on what is needed!) Note: Most of the documents in this repository are written in Markdown - [here is a quick guide](https://guides.github.com/features/mastering-markdown/) if you are new to it.
+This is a collection for all of the tutorials/resources for learning to use Rosetta and the other computational methods we use in our work. It's focused towards helping new Huang lab members get started; there are more general docs at [Rosetta Commons](https://www.rosettacommons.org/docs/latest/Home).  
+
+Please feel free to edit and update if you see old or incorrect info, even if you are new to the lab (sometimes new people bring the best insights on what is needed!) Note: Most of the documents in this repository are written in Markdown - [here is a quick guide](https://guides.github.com/features/mastering-markdown/) if you are new to it.
 
 ## Contents
 [intro_to_sherlock.md](https://github.com/ProteinDesignLab/protein-design-tutorials/blob/master/intro_to_sherlock.md) - A quick-start guide for lab members new to or just getting started on Sherlock.
