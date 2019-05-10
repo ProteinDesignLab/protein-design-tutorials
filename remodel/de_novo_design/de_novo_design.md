@@ -11,6 +11,7 @@ The tutorial should be fairly modular, so you can skip to any of the sections. I
 
 ### 0. Prerequisites
 - You should be familiar with basic Linux stuff like `mv`, `cd`, vim, and stuff like that. [Linux Tutorial](https://ryanstutorials.net/linuxtutorial/)
+- Be able to look at protein structures in PyMOL.
 - You should have a working build of RosettaRemodel, so that you can run the `remodel.linuxgccrelease` executables (or similar looking ones). 
   - If you have access to Sherlock, the Stanford HPC cluster, and have been added to the `possu` group, then the executables should be in `$PI_HOME/working_build/190322_standard/Rosetta/main/source/bin/`.
   - If you have Sherlock access but are not in `possu`, then use the command `ml rosetta` to load the Sherlock installation. Then you can use the Remodel executable by simply typing `remodel.default.linuxgccrelease` (you can tab-complete this).
