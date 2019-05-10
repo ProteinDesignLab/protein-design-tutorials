@@ -1,5 +1,5 @@
 # De novo design with RosettaRemodel
-Created Dec 2018 by Alex Chu. Last updated 190114 AEC  
+Created Dec 2018 by Alex Chu. Last updated 190510 AEC  
 
 This is a step by step tutorial to de novo protein design with fragment sampling in RosettaRemodel. You should get to experience many of the main functionalities of Remodel in the course of this tutorial:
 - backbone design
@@ -7,7 +7,7 @@ This is a step by step tutorial to de novo protein design with fragment sampling
 - remodel and redesign one of the loops
 - build in a disulfide  
 
-The tutorial should be fairly modular, so you can skip to any of the sections. If you run into bugs or have questions about some of the flags, [these documents](https://github.com/ProteinDesignLab/protein-design-tutorials/tree/master/remodel) may or may not be helpful.
+The tutorial should be fairly modular, so you can skip to any of the sections if you don't think some of them are as useful to you. If you run into bugs or have questions about some of the flags, [these documents](https://github.com/ProteinDesignLab/protein-design-tutorials/tree/master/remodel) may or may not be helpful.
 
 ### 0. Prerequisites
 - You should be familiar with basic Linux stuff like `mv`, `cd`, vim, and stuff like that. [Linux Tutorial](https://ryanstutorials.net/linuxtutorial/)
