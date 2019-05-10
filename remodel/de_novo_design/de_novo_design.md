@@ -137,7 +137,7 @@ Run another thousand trajectories with this, and repeat the process, so that you
 
 Once the core is designed, we can design the rest of the protein. Follow the same process to design the surface residues, which you set to PIKAA A in the previous step. Then manually go through your structure to look for weird behavior, especially in the boundary residues, and redesign them to fix them.  
 
-### 3. Remodel one of the loops to insert a helix
+### 3. Remodel one of the loops to insert or remove a helix
 After finishing sequence design, you should have a pretty good initial model for a de novo designed protein! There are some more steps you can do for refining the structure and getting it as good as possible, but we won't go into those here. Instead, we'll try to build a new motif into one segment of the protein, an activity that should be of more general interest to protein engineers.  
 
 Here, we'll insert a helix into the third beta-alpha turn (residues 53-55). To start with, we only have the TIM barrel structure (`TIMbarrel_inc_sequence.pdb`). We first need to generate a blueprint based on the starting structure:
@@ -175,9 +175,22 @@ Great. Then use these flags:
 ```
 Here, we used `quick_and_dirty` to skip the relax step, which can be very slow, since we want to quickly see if we can get good results. When the trajectories are done, take a look at your output structures.
 - If they look okay, then you should run it again, but replace `-remodel:quick_and_dirty` with `-remodel:use_pose_relax`, so that your final designs are relaxed and a little more refined.
-- If not, it could be one of two problems: your secondary structure lengths are wrong, or you're not sampling enough. You can try fixing both of these by trying different loop and helix lengths, and by running more trajectories.
+- If not, it could be one of two problems: your secondary structure lengths are wrong, or you're not sampling enough. You can try fixing both of these by trying different loop and helix lengths, and by running more trajectories.  
 
-Here, we opted to do backbone design and sequence design in a single trajectory. If you'd like to make sure you have your backbone correct, then do sequence design, that's also a good approach sometimes. You could probably take both these approaches and see which one gives you better results. To do this, then add the `-remodel:design:no_design` flag to the initial run, and remove the `ALLAAxc` from the blueprint. Then, once you have a backbone you like, make a new blueprint for that structure, and add `ALLAAxc` to the positions you want to design sequence for. Run Remodel with the same flags, but remove `-remodel:design:no_design`.
+Here, we opted to do backbone design and sequence design in a single trajectory. If you'd like to make sure you have your backbone correct, then do sequence design, that's also a good approach sometimes. You could probably take both these approaches and see which one gives you better results. To do this, then add the `-remodel:design:no_design` flag to the initial run, and remove the `ALLAAxc` from the blueprint. Then, once you have a backbone you like, make a new blueprint for that structure, and add `ALLAAxc` to the positions you want to design sequence for. Run Remodel with the same flags, but remove `-remodel:design:no_design`.  
+
+Finally, let's say your starting structure included the helix, but you wanted to remove it. Then you could run the job with the same flags (you could also add in `-remodel:design:no_design`), but using this blueprint. Notice we just deleted residues 54-60. Remodel will delete those residues from your structure and rejoin the two end residues, but make sure you give it some flexibility to work with around the deletion by setting the neighboring residues to 'L' or 'E' or 'H'.
+```
+...
+51 V .
+52 D E
+53 A L
+61 T L
+62 D L
+63 V H
+64 D .
+...
+```
 
 ### 4. Build a disulfide bridge in the core of the protein
 TODO
