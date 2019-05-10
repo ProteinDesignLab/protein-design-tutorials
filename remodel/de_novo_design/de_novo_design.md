@@ -18,7 +18,11 @@ The tutorial should be fairly modular, so you can skip to any of the sections. I
 - This tutorial relies on some basic knowledge of how RosettaRemodel works, i.e. some of what is discussed in [Remodel Overview](https://github.com/ProteinDesignLab/protein-design-tutorials/blob/master/remodel/remodel_overview.md). If some of the terms or concepts in here aren't familiar to you yet, you can refer to that document.
 
 ### 1. Design a backbone for the TIM barrel
-In this tutorial, let's build the fourfold repeat TIM barrel from [Huang et al](https://www.nature.com/articles/nchembio.1966). De novo design in this framework begins by specifying a protein backbone, i.e. folded secondary structures, onto which sequences can be designed. To start, you'll need:
+In this tutorial, let's build the fourfold repeat TIM barrel from [Huang et al](https://www.nature.com/articles/nchembio.1966). De novo design in this framework begins by specifying a protein backbone, i.e. folded secondary structures, onto which sequences can be designed.  
+
+![de novo TIM barrel](/images/timb.pdf)
+
+To start, you'll need:
 - a stub PDB of alanine or some other residue just as a starting point for Remodel, which we've provided in `ala.pdb`
 - a blueprint specifying the fold you want, which we've provided in `de_novo.bp`.   
 
