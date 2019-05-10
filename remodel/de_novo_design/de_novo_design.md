@@ -4,7 +4,11 @@ Created Dec 2018 by Alex Chu. Last updated 190114 AEC
 This is a step by step tutorial to de novo protein design with fragment sampling in RosettaRemodel. 
 
 ### 0. Prerequisites
-- You should have a working build of RosettaRemodel, so that you can run the `remodel.linuxgccrelease` executables (or similar looking ones). If you have access to Sherlock, the Stanford HPC cluster, and have been added to the `possu` group, then the executables should be in `$PI_HOME/working_build/190322_standard/Rosetta/main/source/bin/`. If this didn't make any sense to you, you should read the [Slurm/Sherlock tutorial](https://github.com/ProteinDesignLab/protein-design-tutorials/blob/master/intro_to_sherlock.md).
+- You should be familiar with basic Linux stuff like `mv`, `cd`, vim, and stuff like that. [Linux Tutorial](https://ryanstutorials.net/linuxtutorial/)
+- You should have a working build of RosettaRemodel, so that you can run the `remodel.linuxgccrelease` executables (or similar looking ones). 
+  - If you have access to Sherlock, the Stanford HPC cluster, and have been added to the `possu` group, then the executables should be in `$PI_HOME/working_build/190322_standard/Rosetta/main/source/bin/`.
+  - If you have Sherlock access but are not in `possu`, then use the command `ml rosetta` to load the Sherlock installation. Then you can use the Remodel executable by simply typing `remodel.default.linuxgccrelease` (you can tab-complete this).
+  - If this didn't make any sense to you, you should read the [Slurm/Sherlock tutorial](https://github.com/ProteinDesignLab/protein-design-tutorials/blob/master/intro_to_sherlock.md).
 - This tutorial relies on some basic knowledge of how RosettaRemodel works, i.e. some of what is discussed in [Remodel Overview](https://github.com/ProteinDesignLab/protein-design-tutorials/blob/master/remodel/remodel_overview.md). If some of the terms or concepts in here aren't familiar to you yet, you can refer to that document.
 
 ### 1. Backbone design
