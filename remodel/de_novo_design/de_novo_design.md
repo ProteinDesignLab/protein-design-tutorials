@@ -7,7 +7,7 @@ This is a step by step tutorial to de novo protein design with fragment sampling
 - remodel and redesign one of the loops
 - build in a disulfide  
 
-The tutorial should be fairly modular, so you can skip to any of the sections if you don't think some of them are as useful to you. If you run into bugs or have questions about some of the flags, [these documents](https://github.com/ProteinDesignLab/protein-design-tutorials/tree/master/remodel) may or may not be helpful.
+The tutorial should be fairly modular, so you can skip to any of the sections if you don't think some of them are as useful to you. If you run into bugs or have questions about some of the flags, [these lab documents](https://github.com/ProteinDesignLab/protein-design-tutorials/tree/master/remodel) may or may not be helpful. You can also refer to the main Remodel docs at [https://www.rosettacommons.org/docs/latest/application_documentation/design/Remodel](https://www.rosettacommons.org/docs/latest/application_documentation/design/Remodel) and [https://www.rosettacommons.org/docs/latest/application_documentation/design/rosettaremodel](https://www.rosettacommons.org/docs/latest/application_documentation/design/rosettaremodel).
 
 ### 0. Prerequisites
 - You should be familiar with basic Linux stuff like `mv`, `cd`, vim, and stuff like that. [Linux Tutorial](https://ryanstutorials.net/linuxtutorial/)
