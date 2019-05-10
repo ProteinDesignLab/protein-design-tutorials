@@ -20,7 +20,7 @@ The tutorial should be fairly modular, so you can skip to any of the sections. I
 ### 1. Design a backbone for the TIM barrel
 In this tutorial, let's build the fourfold repeat TIM barrel from [Huang et al](https://www.nature.com/articles/nchembio.1966). De novo design in this framework begins by specifying a protein backbone, i.e. folded secondary structures, onto which sequences can be designed.  
 
-![de novo TIM barrel](/images/timb.pdf)
+![de novo TIM barrel](/images/timb.png)
 
 To start, you'll need:
 - a stub PDB of alanine or some other residue just as a starting point for Remodel, which we've provided in `ala.pdb`
