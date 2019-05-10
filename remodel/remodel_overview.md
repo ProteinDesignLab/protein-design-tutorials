@@ -7,6 +7,7 @@ This is an overview of the key concepts underlying RosettaRemodel.
 - RosettaRemodel is just one app/executable in that library; it's one of the main apps in that framework for protein design.
 - It combines backbone design (specifying the overall fold); sequence design (packing sidechains onto the backbone); and refinement (wiggling your structure to get it to settle into a more realistic conformation).
 - In many of these steps, what's running under the hood is called the Metropolis-Hastings algorithm. This is a type of Monte Carlo algorithm, which is a fancy name for random sampling algorithms.
+- This is meant to complement the main documentation at [https://www.rosettacommons.org/docs/latest/application_documentation/design/Remodel](https://www.rosettacommons.org/docs/latest/application_documentation/design/Remodel) and [https://www.rosettacommons.org/docs/latest/application_documentation/design/rosettaremodel](https://www.rosettacommons.org/docs/latest/application_documentation/design/rosettaremodel).
 
 ## The Remodel workflow
 
@@ -69,5 +70,6 @@ The key component to all of this working, for protein design, is how good you ar
 It's pretty good, and allows us to design proteins to atomic accuracy. But it also is far from perfect, and doesn't exactly reflect what's going on in nature. For example, it doesn't handle solvent explicitly, or entropic considerations. This is why we can't design proteins to exact, perfect accuracy, and in some hard cases, we can be way off. One day, when we have a perfect scorefunctions, maybe we'll be able to perfect our protein design abilities!  
 
 ## Some notes about implementation
+The blueprint tells Remodel what you want it to do to your structure. Here is a brief explanation of the blueprint syntax: [Blueprint syntax](https://www.rosettacommons.org/docs/latest/application_documentation/design/Remodel#blueprint)
 
-TODO jd2:no_output. Blueprint syntax.
+TODO jd2:no_output. 
