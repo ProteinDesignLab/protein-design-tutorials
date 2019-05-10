@@ -7,7 +7,7 @@ This is a step by step tutorial to de novo protein design with fragment sampling
 - remodel and redesign one of the loops
 - build in a disulfide  
 
-The tutorial should be fairly modular, so you can skip to any of the sections.
+The tutorial should be fairly modular, so you can skip to any of the sections. If you run into bugs or have questions about some of the flags, [these documents](https://github.com/ProteinDesignLab/protein-design-tutorials/tree/master/remodel) may or may not be helpful.
 
 ### 0. Prerequisites
 - You should be familiar with basic Linux stuff like `mv`, `cd`, vim, and stuff like that. [Linux Tutorial](https://ryanstutorials.net/linuxtutorial/)
@@ -18,7 +18,11 @@ The tutorial should be fairly modular, so you can skip to any of the sections.
 - This tutorial relies on some basic knowledge of how RosettaRemodel works, i.e. some of what is discussed in [Remodel Overview](https://github.com/ProteinDesignLab/protein-design-tutorials/blob/master/remodel/remodel_overview.md). If some of the terms or concepts in here aren't familiar to you yet, you can refer to that document.
 
 ### 1. Design a backbone for the TIM barrel
-De novo design in this framework begins by specifying a protein backbone, i.e. folded secondary structures, onto which sequences can be designed. To start, you'll need a stub PDB of alanine or some other residue, which we've provided in `ala.pdb`, and a blueprint specifying the fold you want, which we've provided in `de_novo.bp`. In this tutorial, let's build the fourfold repeat TIM barrel from [Huang et al](https://www.nature.com/articles/nchembio.1966). Then the blueprint specifies the fold of one of the four repeats, which is a beta-alpha-beta-alpha motif. Now, let's specify some of the arguments we want Remodel to take, and save these in a file called `flags`:
+In this tutorial, let's build the fourfold repeat TIM barrel from [Huang et al](https://www.nature.com/articles/nchembio.1966). De novo design in this framework begins by specifying a protein backbone, i.e. folded secondary structures, onto which sequences can be designed. To start, you'll need:
+- a stub PDB of alanine or some other residue just as a starting point for Remodel, which we've provided in `ala.pdb`
+- a blueprint specifying the fold you want, which we've provided in `de_novo.bp`.   
+
+You should open the blueprint in vim or with `cat de_novo.bp` to see how the secondary structures are set up. The blueprint specifies the fold of one-fourth of the TIM barrel, which is a beta-alpha-beta-alpha motif. Using flags we'll pass to Remodel, we'll instruct Remodel to 1) build this b-a-b-a motif, and then 2) repeat this 4 times to make the full TIM barrel. We've already worked out what the correct strand, helix, and loop lengths should be for you. Now, let's specify all the Rosetta flags, and save these in a file called `flags`:
 ```
 -s ala.pdb
 -remodel:blueprint de_novo.bp
@@ -68,7 +72,11 @@ When selecting ideal backbone structures, you should look for 1) correct topolog
 ### 2. Design a sequence that will fold into your backbone's structure
 Once you have an ideal backbone structure, you can proceed to sequence design. If you weren't able to get a good peptide backbone for the de novo TIM barrel in Part 1, we have included one in the directory (`TIMbarrel_centroid_backbone.pdb`). For this kind of problem, we will use an approach known as "iterative enrichment." This means we will partition the design problem into more manageable subproblems by restricting the sequence search space at each stage of design.  
 
-First, classify each residue as a core, boundary, or surface residue. Core residues are those which participate in hydrophobic packing. Surface residues are solvent-exposed. Boundary residues are the hardest to define and are basically those residues which are not obviously core or surface. In the blueprint, design core residues to APOLAR, surface residues to PIKAA A (postponing surface design until later), and boundary residues to ALLAAxc. For example, for the TIM barrel, the beginning of your blueprint might look like this:
+First, this time you'll generate your own blueprint using the provided python script.
+```
+python makeBlueprint.py TIMbarrel_centroid_backbone.pdb
+```
+Next, in the blueprint, classify each residue as a core, boundary, or surface residue. Core residues are those which participate in hydrophobic packing. Surface residues are solvent-exposed. Boundary residues are the hardest to define and are basically those residues which are not obviously core or surface. In the blueprint, design core residues to APOLAR, surface residues to PIKAA A (postponing surface design until later), and boundary residues to ALLAAxc. For example, for the TIM barrel, the beginning of your blueprint might look like this:
 ```
 1 A L PIKAA A
 2 V L ALLAAxc
@@ -80,7 +88,7 @@ First, classify each residue as a core, boundary, or surface residue. Core resid
 8 V L PIKAA A
 ...
 ```
-At this stage, we set the Ramachandran space to "L" so that the protein relaxes smoothly. You should use these flags:
+At this stage, we set the third column of the blueprint to "L" so that the protein relaxes smoothly. You should use these flags:
 ```
 -s [your structure].pdb
 -remodel:blueprint [your blueprint].bp
@@ -102,7 +110,7 @@ At this stage, we set the Ramachandran space to "L" so that the protein relaxes 
 -num_trajectory 1
 -save_top 1
 ```
-`-remodel:use_pose_relax` defines the relax protocol that is used. Relax can be slow, so if you're in a hurry, replace this flag with `-remodel:quick_and_dirty`, which bypasses relax. `-remodel:dr_cycles 3` indicates that you want to go through three rounds of sequence Design and Refinement/Relax; you can also change this to 1 if you want to cut down on sampling time. `-soft_rep_design` temporarily reduces the repulsion term of the Rosetta scorefunction during design, which makes less difficult to place larger side chains in buried positions. `-no_optH false`, `-ex1`, and `-ex2` deal with rotamer sampling and typically included in Rosetta sequence design. You can leave out `-ex1` and `-ex2` if you want to cut down on sampling time. `-linmem_ig 10` helps reduce memory usage, but at the cost of increased sampling time, and can also be left out.  
+`-remodel:use_pose_relax` defines the relax protocol that is used. Relax can be slow, so if you're in a hurry, replace this flag with `-remodel:quick_and_dirty`, which bypasses relax which can be slow. `-remodel:dr_cycles 3` indicates that you want to go through three rounds of sequence Design and Refinement/Relax; you can also change this to 1 if you want to cut down on sampling time. `-soft_rep_design` temporarily reduces the repulsion term of the Rosetta scorefunction during design, which makes less difficult to place larger side chains in buried positions. `-no_optH false`, `-ex1`, and `-ex2` deal with rotamer sampling and typically included in Rosetta sequence design. You can leave out `-ex1` and `-ex2` if you want to cut down on sampling time. `-linmem_ig 10` helps reduce memory usage, but at the cost of increased sampling time, and can also be left out.  
 
 Run a large number of trajectories, ~1e3, and generate a sequence logo from your output (imagine all your outputs as a multiple sequence alignment). There are a few ways to do this, but one is to gather your output structures into a directory, copy `get_sequence_from_pdb.py` from the `essentials_kit` repository, run it in the directory, and then use the output `sequence_list.txt` on a web server, e.g. [https://weblogo.berkeley.edu/logo.cgi](https://weblogo.berkeley.edu/logo.cgi), to generate it for you. Looking at this sequence logo will help you see which residues are selected more frequently at different positions, and perhaps more helpfully, not selected at all. This allows you to go back and "iteratively enrich" your sequences for the "right" residues. For example, if you generated this logo plot from using the blueprint above:  
 
@@ -124,9 +132,48 @@ Run another thousand trajectories with this, and repeat the process, so that you
 
 Once the core is designed, we can design the rest of the protein. Follow the same process to design the surface residues, which you set to PIKAA A in the previous step. Then manually go through your structure to look for weird behavior, especially in the boundary residues, and redesign them to fix them.  
 
-### 3. Build a disulfide bridge in the core of the protein
-TODO
+### 3. Remodel one of the loops to insert a helix
+After finishing sequence design, you should have a pretty good initial model for a de novo designed protein! There are some more steps you can do for refining the structure and getting it as good as possible, but we won't go into those here. Instead, we'll try to build a new motif into one segment of the protein, an activity that should be of more general interest to protein engineers.  
 
-### 4. Remodel one of the loops to make it longer
+Here, we'll insert a helix into the third beta-alpha turn (residues 53-55). To start with, we only have the TIM barrel structure (`TIMbarrel_inc_sequence.pdb`). We first need to generate a blueprint based on the starting structure:
+```
+python makeBlueprint.py TIMbarrel_inc_sequence.pdb
+```
+You can rename the output ".bp" file to something else if you want. Then let's edit the blueprint to insert a 6-residue helix, flanked by loops, into the third beta-alpha turn:
+```
+...
+51 V .
+52 D E NATAA
+53 A L ALLAAxc
+0 x H ALLAAxc
+0 x H ALLAAxc
+0 x H ALLAAxc
+0 x H ALLAAxc
+0 x H ALLAAxc
+0 x H ALLAAxc
+0 x L ALLAAxc
+54 T L ALLAAxc
+55 D L NATAA
+56 V .
+57 D .
+...
+```
+Great. Then use these flags:
+```
+-s TIMbarrel_inc_sequence.pdb
+-blueprint [your blueprint].bp
+-jd2:no_output
+-overwrite
+-num_trajectory 10
+-save_top 10 
+-remodel:quick_and_dirty
+```
+Here, we used `quick_and_dirty` to skip the relax step, which can be very slow, since we want to quickly see if we can get good results. When the trajectories are done, take a look at your output structures.
+- If they look okay, then you should run it again, but replace `-remodel:quick_and_dirty` with `-remodel:use_pose_relax`, so that your final designs are relaxed and a little more refined.
+- If not, it could be one of two problems: your secondary structure lengths are wrong, or you're not sampling enough. You can try fixing both of these by trying different loop and helix lengths, and by running more trajectories.
+
+Here, we opted to do backbone design and sequence design in a single trajectory. If you'd like to make sure you have your backbone correct, then do sequence design, that's also a good approach sometimes. You could probably take both these approaches and see which one gives you better results. To do this, then add the `-remodel:design:no_design` flag to the initial run, and remove the `ALLAAxc` from the blueprint. Then, once you have a backbone you like, make a new blueprint for that structure, and add `ALLAAxc` to the positions you want to design sequence for. Run Remodel with the same flags, but remove `-remodel:design:no_design`.
+
+### 4. Build a disulfide bridge in the core of the protein
 TODO
 
