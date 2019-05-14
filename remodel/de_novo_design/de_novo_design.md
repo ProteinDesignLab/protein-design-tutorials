@@ -75,7 +75,115 @@ Backbone design can be the hardest part of de novo design. It can be tricky figu
 When selecting ideal backbone structures, you should look for 1) correct topology, as in whether the helices and strands are positioned correctly relative to each other, and 2) clean loops, as in loops where the backbone hydrogen bonds (C=O and N-H) are largely satisfied and the torsional angles are in permitted regions of Ramachandran space. 
 
 ### 2. Design a sequence that will fold into your backbone's structure
-Once you have an ideal backbone structure, you can proceed to sequence design. If you weren't able to get a good peptide backbone for the de novo TIM barrel in Part 1, we have included one in the directory (`TIMbarrel_centroid_backbone.pdb`). For this kind of problem, we will use an approach known as "iterative enrichment." This means we will partition the design problem into more manageable subproblems by restricting the sequence search space at each stage of design.  
+Once you have an ideal backbone structure, you can proceed to sequence design. If you weren't able to get a good peptide backbone for the de novo TIM barrel in Part 1, we have included one in the directory (`TIMbarrel_centroid_backbone.pdb`). For this tutorial, we will do simple automated sequence design, just so you can get a feel for how sequence design (sometimes just "design" for short) works in RosettaRemodel. If you want to learn how de novo sequence design is carried out in practice, see below*. There are many parallels.  
+
+First, this time you'll generate your own blueprint using the provided python script.
+```
+python makeBlueprint.py TIMbarrel_centroid_backbone.pdb
+```
+In the blueprint, edit all the residues to be designed as `ALLAAxc`. If you are using vim, you can do this by typing `:%norm A ALLAAxc`. At this stage, we set the third column of the blueprint to "L" so that the protein relaxes smoothly. If you are using vim, you can do this by typing `:%s/\./L/g`. For the TIM barrel, the beginning of your blueprint might look like this:
+```
+1 A L ALLAAxc
+2 V L ALLAAxc
+3 V L ALLAAxc
+4 V L ALLAAxc
+5 V L ALLAAxc
+6 V L ALLAAxc
+7 V L ALLAAxc
+8 V L ALLAAxc
+...
+```
+You should use these flags:
+```
+-s [your structure].pdb
+-remodel:blueprint [your blueprint].bp
+-jd2:no_output
+-overwrite
+-repeat_structure 4
+-remodel:RemodelLoopMover:cyclic_peptide
+-hb_lrbb 2.0 
+-randomize_loops false
+-bypass_fragments
+-bypass_closure
+-remodel:use_pose_relax
+-remodel:dr_cycles 3
+-soft_rep_design
+-no_optH false
+-ex1
+-ex2
+-linmem_ig 10
+-num_trajectory 1
+-save_top 1
+```
+`-remodel:use_pose_relax` defines the relax protocol that is used. Relax can be slow, so if you're in a hurry, replace this flag with `-remodel:quick_and_dirty`, which bypasses relax. `-remodel:dr_cycles 3` indicates that you want to go through three rounds of sequence Design and Refinement/Relax; you can also change this to 1 if you want to cut down on sampling time. `-soft_rep_design` temporarily reduces the repulsion term of the Rosetta scorefunction during design, which makes less difficult to place larger side chains in buried positions. `-no_optH false`, `-ex1`, and `-ex2` deal with rotamer sampling and typically included in Rosetta sequence design. You can leave out `-ex1` and `-ex2` if you want to cut down on sampling time. `-linmem_ig 10` helps reduce memory usage, but at the cost of increased sampling time, and can also be left out.  
+
+Run a few trajectories, ~1e2, and see how your results look. If you restricted dr_cycles to 1, then you might find some packing defects or other flaws with the design. If you see sidechains that you think work quite well, you can lock them into your blueprint by changing `ALLAAxc` for that residue to `NATAA`, to keep the current residue, or `PIKAA RK`, for example, to restrict design to positively charged residues (Arg and Lys).  
+
+### 3. Remodel one of the loops to insert or remove a helix
+After finishing sequence design, you should have a pretty good initial model for a de novo designed protein! There are some more steps you can do for refining the structure and getting it as good as possible, but we won't go into those here. Instead, we'll try to build a new motif into one segment of the protein, an activity that should be of more general interest to protein engineers.  
+
+Here, we'll insert a helix into the third beta-alpha turn (residues 53-55). To start with, we only have the TIM barrel structure (`TIMbarrel_inc_sequence.pdb`). We first need to generate a blueprint based on the starting structure:
+```
+python makeBlueprint.py TIMbarrel_inc_sequence.pdb
+```
+You can rename the output ".bp" file to something else if you want. Then let's edit the blueprint to insert a 6-residue helix, flanked by loops, into the third beta-alpha turn:
+```
+...
+51 V .
+52 D E NATAA
+53 A L ALLAAxc
+0 x H ALLAAxc
+0 x H ALLAAxc
+0 x H ALLAAxc
+0 x H ALLAAxc
+0 x H ALLAAxc
+0 x H ALLAAxc
+0 x L ALLAAxc
+54 T L ALLAAxc
+55 D L NATAA
+56 V .
+57 D .
+...
+```
+Great. Then use these flags:
+```
+-s TIMbarrel_inc_sequence.pdb
+-blueprint [your blueprint].bp
+-jd2:no_output
+-overwrite
+-num_trajectory 10
+-save_top 10 
+-remodel:quick_and_dirty
+```
+Here, we used `quick_and_dirty` to skip the relax step, which can be very slow, since we want to quickly see if we can get good results. When the trajectories are done, take a look at your output structures.
+- If they look okay, then you should run it again, but replace `-remodel:quick_and_dirty` with `-remodel:use_pose_relax`, so that your final designs are relaxed and a little more refined.
+- If not, it could be one of two problems: your topology is wrong, or you're not sampling enough. You can try fixing both of these by trying different loop and helix lengths, and by running more trajectories.  
+
+Here, we opted to do backbone design and sequence design in a single trajectory. If you'd like to make sure you have your backbone correct, then do sequence design, that's also a good approach sometimes. You could probably take both these approaches and see which one gives you better results. To do this, then add the `-remodel:design:no_design` flag to the initial run, and remove the `ALLAAxc` from the blueprint. Then, once you have a backbone you like, make a new blueprint for that structure, and add `ALLAAxc` to the positions you want to design sequence for. Run Remodel with the same flags, but remove `-remodel:design:no_design`. TODO split this into another section?  
+
+Finally, let's say your starting structure included the helix, but you wanted to remove it. Then you could run the job with the same flags (you could also add in `-remodel:design:no_design`), but using this blueprint. Notice we just deleted residues 54-60. Remodel will delete those residues from your structure and rejoin the two end residues, but make sure you give it some flexibility to work with around the deletion by setting the neighboring residues to 'L' or 'E' or 'H'.
+```
+...
+51 V .
+52 D E
+53 A L
+61 T L
+62 D L
+63 V H
+64 D .
+...
+```
+
+### 4. Build a disulfide bridge in the core of the protein
+TODO
+
+
+
+
+
+
+### *Appendix. Iterative enrichment de novo sequence design
+Here, we will outline the process for more manually-guided sequence design known as "iterative enrichment." This method allows us to overcome some of the randomness in the Monte Carlo design process by gradually "enriching" residues that are frequently picked at a position, in a lot of trajectories.  
 
 First, this time you'll generate your own blueprint using the provided python script.
 ```
@@ -136,62 +244,3 @@ you might go back and edit your blueprint like so:
 Run another thousand trajectories with this, and repeat the process, so that you begin to converge on a good sequence for packing the hydrophobic core.  
 
 Once the core is designed, we can design the rest of the protein. Follow the same process to design the surface residues, which you set to PIKAA A in the previous step. Then manually go through your structure to look for weird behavior, especially in the boundary residues, and redesign them to fix them.  
-
-### 3. Remodel one of the loops to insert or remove a helix
-After finishing sequence design, you should have a pretty good initial model for a de novo designed protein! There are some more steps you can do for refining the structure and getting it as good as possible, but we won't go into those here. Instead, we'll try to build a new motif into one segment of the protein, an activity that should be of more general interest to protein engineers.  
-
-Here, we'll insert a helix into the third beta-alpha turn (residues 53-55). To start with, we only have the TIM barrel structure (`TIMbarrel_inc_sequence.pdb`). We first need to generate a blueprint based on the starting structure:
-```
-python makeBlueprint.py TIMbarrel_inc_sequence.pdb
-```
-You can rename the output ".bp" file to something else if you want. Then let's edit the blueprint to insert a 6-residue helix, flanked by loops, into the third beta-alpha turn:
-```
-...
-51 V .
-52 D E NATAA
-53 A L ALLAAxc
-0 x H ALLAAxc
-0 x H ALLAAxc
-0 x H ALLAAxc
-0 x H ALLAAxc
-0 x H ALLAAxc
-0 x H ALLAAxc
-0 x L ALLAAxc
-54 T L ALLAAxc
-55 D L NATAA
-56 V .
-57 D .
-...
-```
-Great. Then use these flags:
-```
--s TIMbarrel_inc_sequence.pdb
--blueprint [your blueprint].bp
--jd2:no_output
--overwrite
--num_trajectory 10
--save_top 10 
--remodel:quick_and_dirty
-```
-Here, we used `quick_and_dirty` to skip the relax step, which can be very slow, since we want to quickly see if we can get good results. When the trajectories are done, take a look at your output structures.
-- If they look okay, then you should run it again, but replace `-remodel:quick_and_dirty` with `-remodel:use_pose_relax`, so that your final designs are relaxed and a little more refined.
-- If not, it could be one of two problems: your topology is wrong, or you're not sampling enough. You can try fixing both of these by trying different loop and helix lengths, and by running more trajectories.  
-
-Here, we opted to do backbone design and sequence design in a single trajectory. If you'd like to make sure you have your backbone correct, then do sequence design, that's also a good approach sometimes. You could probably take both these approaches and see which one gives you better results. To do this, then add the `-remodel:design:no_design` flag to the initial run, and remove the `ALLAAxc` from the blueprint. Then, once you have a backbone you like, make a new blueprint for that structure, and add `ALLAAxc` to the positions you want to design sequence for. Run Remodel with the same flags, but remove `-remodel:design:no_design`.  
-
-Finally, let's say your starting structure included the helix, but you wanted to remove it. Then you could run the job with the same flags (you could also add in `-remodel:design:no_design`), but using this blueprint. Notice we just deleted residues 54-60. Remodel will delete those residues from your structure and rejoin the two end residues, but make sure you give it some flexibility to work with around the deletion by setting the neighboring residues to 'L' or 'E' or 'H'.
-```
-...
-51 V .
-52 D E
-53 A L
-61 T L
-62 D L
-63 V H
-64 D .
-...
-```
-
-### 4. Build a disulfide bridge in the core of the protein
-TODO
-
