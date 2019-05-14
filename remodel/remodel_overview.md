@@ -23,7 +23,7 @@ At this stage, the amino acid sequence (sidechains) are not super important. If 
 ![Protein torsional angles](/images/phi_psi_torsional_diagram.jpg)
 
 ### Sequence design
-Sequence design is the second stage that involves placing sidechains once you have a defined backbone. The Rosetta "packer" does this by randomly picking an amino acid position, randomly picking a sidechain to go there, randomly picking the rotamer, or orientation, of that sidechain, and then if it this all looks good*, then it keeps it. Otherwise it discards this random sample and starts again. It does this a million times until every position has a sidechain that fits pretty well.  
+Sequence design is the second stage that involves placing sidechains once you have a defined backbone. The sequence space of a protein from a design perspective is enormous: It is (length of protein) ^ (20 amino acids) ^ (chi1 rotamer angle values) ^ (chi2 rotamer value angles) ^ ...as many rotamer angles as you need. Since it's impossible to try out every sequence in this space, Rosetta uses Monte Carlo random sampling to pick the best sidechains and rotamers. The Rosetta "packer" does this by randomly picking an amino acid position, randomly picking a sidechain to go there, randomly picking the rotamer, or orientation, of that sidechain, and then if it this all looks good*, then it keeps it. Otherwise it discards this random sample and starts again. It does this a million times until every position has a sidechain that fits pretty well.  
 
 *See the Monte Carlo section
 
