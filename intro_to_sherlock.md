@@ -15,6 +15,7 @@ In general, don't do computationally heavy work on login nodes (long Rosetta run
 - `salloc` requests, or allocates, resources for you on Sherlock. You can then look up which node/CPU you've been granted using `squeue` (see below) and then `ssh` into that node (e.g. `ssh sh-101-17`).
 - `sbatch [filename.sbatch]` submits a job to the Sherlock job scheduler **and is what you will probably use the most**. An example of an bash script to be used as an sbatch file is given below, with some of the common arguments you might supply to it. 
 - `squeue -u [SUNet ID]` will let you see the status of your jobs. Another common argument is `-p possu` to see  jobs running on the partition.  
+- `scancel [job ID]` lets you cancel a job from the slurm queue (replace job ID with the Job ID listed from `squeue`.)
 
 You can also run Jupyter notebooks on Sherlock by port-forwarding the notebook interface to a browser on your computer. Vanessa Sochat and Raphael Townshend have set up a good resource on how to do this: [https://github.com/vsoch/forward].  
 
