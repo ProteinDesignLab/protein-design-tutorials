@@ -1,5 +1,5 @@
 # De novo design with RosettaRemodel
-Created Dec 2018 by Alex Chu. Last updated 190510 AEC  
+Created Dec 2018 by Alex Chu.  
 
 This is a step by step tutorial to de novo protein design with fragment sampling in RosettaRemodel. You should get to experience many of the main functionalities of Remodel in the course of this tutorial:
 - backbone design
@@ -9,16 +9,16 @@ This is a step by step tutorial to de novo protein design with fragment sampling
 
 The tutorial should be fairly modular, so you can skip to any of the sections if you don't think some of them are as useful to you. If you run into bugs or have questions about some of the flags, [these lab documents](https://github.com/ProteinDesignLab/protein-design-tutorials/tree/master/remodel) may or may not be helpful. You can also refer to the main Remodel docs at [https://www.rosettacommons.org/docs/latest/application_documentation/design/Remodel](https://www.rosettacommons.org/docs/latest/application_documentation/design/Remodel) and [https://www.rosettacommons.org/docs/latest/application_documentation/design/rosettaremodel](https://www.rosettacommons.org/docs/latest/application_documentation/design/rosettaremodel).
 
-### 0. Prerequisites
+## 0. Prerequisites
 - You should be familiar with basic Linux stuff like `mv`, `cd`, vim, and stuff like that. [Linux Tutorial](https://ryanstutorials.net/linuxtutorial/)
-- Be able to look at protein structures in PyMOL.
+- Be able to look at protein structures in PyMOL (or similar program).
 - You should have a working build of RosettaRemodel, so that you can run the `remodel.linuxgccrelease` executables (or similar looking ones). 
   - If you have access to Sherlock, the Stanford HPC cluster, and have been added to the `possu` group, then the executables should be in `$PI_HOME/working_build/190322_standard/Rosetta/main/source/bin/`.
   - If you have Sherlock access but are not in `possu`, then use the command `ml rosetta` to load the Sherlock installation. Then you can use the Remodel executable by simply typing `remodel.default.linuxgccrelease` (you can tab-complete this).
   - If this didn't make any sense to you, you should read the [Slurm/Sherlock tutorial](https://github.com/ProteinDesignLab/protein-design-tutorials/blob/master/intro_to_sherlock.md).
 - This tutorial relies on some basic knowledge of how RosettaRemodel works, i.e. some of what is discussed in [Remodel Overview](https://github.com/ProteinDesignLab/protein-design-tutorials/blob/master/remodel/remodel_overview.md). If some of the terms or concepts in here aren't familiar to you yet, you can refer to that document.
 
-### 1. Design a backbone for the TIM barrel
+## 1. Design a backbone for the TIM barrel
 In this tutorial, let's build the fourfold repeat TIM barrel from [Huang et al](https://www.nature.com/articles/nchembio.1966). De novo design in this framework begins by specifying a protein backbone, i.e. folded secondary structures, onto which sequences can be designed.  
 
 ![de novo TIM barrel](/images/timb.png)
@@ -74,7 +74,7 @@ Backbone design can be the hardest part of de novo design. It can be tricky figu
 
 When selecting ideal backbone structures, you should look for 1) correct topology, as in whether the helices and strands are positioned correctly relative to each other, and 2) clean loops, as in loops where the backbone hydrogen bonds (C=O and N-H) are largely satisfied and the torsional angles are in permitted regions of Ramachandran space. 
 
-### 2. Design a sequence that will fold into your backbone's structure
+## 2. Design a sequence that will fold into your backbone's structure
 Once you have an ideal backbone structure, you can proceed to sequence design. If you weren't able to get a good peptide backbone for the de novo TIM barrel in Part 1, we have included one in the directory (`TIMbarrel_centroid_backbone.pdb`). For this tutorial, we will do simple automated sequence design, just so you can get a feel for how sequence design (sometimes just "design" for short) works in RosettaRemodel. If you want to learn how de novo sequence design is carried out in practice, see below*. There are many parallels.  
 
 First, this time you'll generate your own blueprint using the provided python script.
@@ -93,7 +93,7 @@ In the blueprint, edit all the residues to be designed as `ALLAAxc`. If you are 
 8 V L ALLAAxc
 ...
 ```
-You should use these flags:
+To design the sequence, keep only the first 46 lines of the blueprint (one "quarter-barrel") and delete the rest; this specifies the same changes to be made to all four repeat segments. You can use the flags provided below. If you want to design the protein without repeating sequence, keep the whole blueprint but remove the `-repeat_structure 4` flag.
 ```
 -s [your structure].pdb
 -remodel:blueprint [your blueprint].bp
@@ -119,7 +119,7 @@ You should use these flags:
 
 Run a few trajectories, ~1e2, and see how your results look. If you restricted dr_cycles to 1, then you might find some packing defects or other flaws with the design. If you see sidechains that you think work quite well, you can lock them into your blueprint by changing `ALLAAxc` for that residue to `NATAA`, to keep the current residue, or `PIKAA RK`, for example, to restrict design to positively charged residues (Arg and Lys).  
 
-### 3. Remodel one of the loops to insert or remove a helix
+## 3. Remodel one of the loops to insert or remove a helix
 After finishing sequence design, you should have a pretty good initial model for a de novo designed protein! There are some more steps you can do for refining the structure and getting it as good as possible, but we won't go into those here. Instead, we'll try to build a new motif into one segment of the protein, an activity that should be of more general interest to protein engineers.  
 
 Here, we'll insert a helix into the third beta-alpha turn (residues 53-55). To start with, we only have the TIM barrel structure (`TIMbarrel_inc_sequence.pdb`). We first need to generate a blueprint based on the starting structure:
@@ -174,7 +174,7 @@ Finally, let's say your starting structure included the helix, but you wanted to
 ...
 ```
 
-### 4. Build a disulfide bridge in the core of the protein
+## 4. Build a disulfide bridge in the core of the protein
 TODO
 
 
@@ -182,7 +182,7 @@ TODO
 
 
 
-### *Appendix. Iterative enrichment de novo sequence design
+## *Appendix. Iterative enrichment de novo sequence design
 Here, we will outline the process for more manually-guided sequence design known as "iterative enrichment." This method allows us to overcome some of the randomness in the Monte Carlo design process by gradually "enriching" residues that are frequently picked at a position, in a lot of trajectories.  
 
 First, this time you'll generate your own blueprint using the provided python script.
