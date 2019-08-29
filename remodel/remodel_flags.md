@@ -16,7 +16,6 @@ loop closure done with random chain breaks, then CCD or KIC; only models with cl
 *-remodel:use_pose_relax*  
 *-insert_segment_from_pdb [filename]*. insert pdb fragment (trimmed to only contain insertion residues) into blueprint where designated ‘I’. Be sure to include linker residues to allow connection.  
 *-bypass_closure*. turn off chain closure (which is hard for some cases where chain length is unsure) and instead grow chains to closure.  
-*-no_jumps*.   
 *-swap_refine_confirm_protocols*. Use KIC instead of CCD for refinement  
 *-remodel:design:no_design*. Skip designing sequence onto the backbone. For de novo at least, doesn’t add too much time on.  
 *-no_jumps*. sample degrees of freedom for flexible linker between two rigid bodies. What that means: To join two chains in a chainbreak, you can freeze the chains in space (this is called creating a jump) and build the loop with standard loop modeling/closure methods. Or you can allow the chains to move with respect to each other (no_jumps), which allows solutions where the other end moves (this is more like a docking-type procedure). Think of trying to build a bridge vs lasso a cow.  
