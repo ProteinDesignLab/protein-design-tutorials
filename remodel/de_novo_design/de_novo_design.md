@@ -232,15 +232,15 @@ Run a large number of trajectories, ~1e3, and generate a sequence logo from your
 you might go back and edit your blueprint like so:
 ```
 1 A L PIKAA A
-2 V E PIKAA IWV
-3 V E PIKAA ILW
-4 V E PIKAA IV
-5 V E PIKAA IL
-6 V E PIKAA LIV
+2 V L PIKAA IWV
+3 V L PIKAA ILW
+4 V L PIKAA IV
+5 V L PIKAA IL
+6 V L PIKAA LIV
 7 V L PIKAA LWIV
 8 V L PIKAA A
 ...
 ```
-Run another thousand trajectories with this, and repeat the process, so that you begin to converge on a good sequence for packing the hydrophobic core.  
+You might have noticed that residues 2-6 were previously set as `E` but here are `L`. In order to relax the whole structure with `-use_pose_relax`, we need to change the SS assignment from `.` to any of the assignment letters - `H`, `E`, `L`, or `D`. It doesn't matter which one, since `-bypass_fragments` is turned on, so these assignments are not being used to determine fragment sampling. Here we've arbitrarily chosen `L`. Run another thousand trajectories with this, and repeat the process, so that you begin to converge on a good sequence for packing the hydrophobic core.  
 
 Once the core is designed, we can design the rest of the protein. Follow the same process to design the surface residues, which you set to PIKAA A in the previous step. Then manually go through your structure to look for weird behavior, especially in the boundary residues, and redesign them to fix them.  
