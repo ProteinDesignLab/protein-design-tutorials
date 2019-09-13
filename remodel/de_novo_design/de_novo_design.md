@@ -201,7 +201,9 @@ Next, in the blueprint, classify each residue as a core, boundary, or surface re
 8 V L PIKAA A
 ...
 ```
-At this stage, we set the third column of the blueprint to "L" so that the protein relaxes smoothly. You should use these flags:
+You might have noticed that residues 2-6 were previously set as `E` but here are `L`. Here we want to relax the whole protein with `-use_pose_relax`, which only relaxes residues with a secondary structure assignment (SSA). To do this we need to give every residue a SSA by changing the third column from `.` to any of the assignment letters - `H`, `E`, `L`, or `D`. **It doesn't matter which one, since `-bypass_fragments` is turned on, so these assignments are not being used to determine fragment sampling - they only determine which residues are relaxed.** Here we've arbitrarily chosen `L`. You can read more about this in [Remodel Overview](https://github.com/ProteinDesignLab/protein-design-tutorials/blob/master/remodel/remodel_overview.md) under the Refinement section.  
+
+You should use these flags:
 ```
 -s [your structure].pdb
 -remodel:blueprint [your blueprint].bp
@@ -241,6 +243,6 @@ you might go back and edit your blueprint like so:
 8 V L PIKAA A
 ...
 ```
-You might have noticed that residues 2-6 were previously set as `E` but here are `L`. In order to relax the whole structure with `-use_pose_relax`, we need to change the SS assignment from `.` to any of the assignment letters - `H`, `E`, `L`, or `D`. It doesn't matter which one, since `-bypass_fragments` is turned on, so these assignments are not being used to determine fragment sampling. Here we've arbitrarily chosen `L`. Run another thousand trajectories with this, and repeat the process, so that you begin to converge on a good sequence for packing the hydrophobic core.  
+Run another thousand trajectories with this, and repeat the process, so that you begin to converge on a good sequence for packing the hydrophobic core.  
 
 Once the core is designed, we can design the rest of the protein. Follow the same process to design the surface residues, which you set to PIKAA A in the previous step. Then manually go through your structure to look for weird behavior, especially in the boundary residues, and redesign them to fix them.  
