@@ -28,7 +28,17 @@ Sequence design is the second stage that involves placing sidechains once you ha
 *See the Monte Carlo section
 
 ### Refinement
-Relax (also called refinement or minimization) is a final energy minimization step that is carried out once you have a complete structure (backbone + sidechains). It's like when you scoop flour into a cup and shake it around a little to make sure any air pockets collapse and extra stuff falls away, so it all fits together nicely.
+Relax (also called refinement or minimization) is a final energy minimization step that is carried out once you have a complete structure (backbone + sidechains). Instead of Monte Carlo sampling of the landscape, it's gradient descent to reach the best local minimum. It's like when you scoop flour into a cup and shake it around a little to make sure any air pockets collapse and extra stuff falls away, so it all fits together nicely.  
+
+Remodel has a slightly different twist on refinement/relax compared to standard Rosetta. The `-remodel:use_pose_relax` and `-remodel:use_cart_relax` flags are the primary flags in charge of the refinement step in Remodel. They run the standard Rosetta relax on your protein, with the added feature of allowing you to relax only some parts of the structure, which is done by secretly enforcing constraints on the rest of the structure. The constraints are specified in the blueprint under the secondary structure assignment (SSA) column, where you put the H,E,L,D or ABEGO assignment; all residues without a SSA are constrained to not relax. Coincidentally, the SSA also define residues to perform fragment sampling (backbone design) on. So you have to do a little flag-dancing to get what you want with fragment sampling and relax:  
+- if you want to relax + pick fragments for whole structure: (set SSA for all residues AND -remodel:use_pose_relax)
+- if you want to relax whole structure but don't pick any fragments: (same as above AND -bypass_fragments) OR (don't set SSA for any residues AND -remodel:use_pose_relax AND -remodel:free_relax)
+- if you want to relax + pick fragments for partial structure: set SSA for target residues AND -remodel:use_pose_relax
+- if you want to relax partial structure but don't pick any fragments: (same as above AND -bypass_fragments)
+- if you want to pick partial fragments but relax whole structure: set SSA for target residues AND -remodel:use_pose_relax AND -remodel:free_relax
+- cart relax can be used in place of pose relax for any of these situations
+
+Refinement in general is slow and can be skipped using the quick_and_dirty flag. If doing refinement (meaning you don’t include quick_and_dirty), be sure to use one of the pose or cart relax flags, as I think the default is CCD-relax which is “bad" according to Possu.  
 
 ### Workflow & subway map
 At the end of the day, you actually use Remodel by running the executable `remodel.linuxgccrelease` in Terminal (with maybe some variations in the exact command if you don't use Linux) and giving it a structure and a number of arguments. These arguments/flags/options tell Remodel what you want it to do to your structure. An actual command might look like this:
