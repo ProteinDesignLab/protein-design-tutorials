@@ -24,6 +24,7 @@ loop closure done with random chain breaks, then CCD or KIC; only models with cl
 *-remodel:cstfilter [int]*. Don’t return structures that have atompair_cst scores higher than this number.  
 *-constraints:cst_file [filename]*. Traditional/old method of defining constraints. (not enzdes)  
 *-constraints:cst_fa_weight [float]*. Scorefunction weight for atompair csts. >1000 usually leads to unnatural structures.  
+*-relax:constrain_relax_to_start_coords*. Constrains relax to starting coordinates (doesn't allow backbone to move). In the past I (Alex) have used this in conjunction with `-score:set_weights coordinate_constraint 4.0`  
 *-soft_rep_design*. Lessens repulsion scorefunction terms during design to allow bigger sidechains to be sampled in the core.  
 *-core_cutoff [int usu 16 or so]*. The minimum number of neighbors a residue must have to be considered a hydrophobic core residue.  
 *-boundary_cutoff [int usu 15 or so]*. The maximum number of neighbors a residue can have to be considered a solvent exposed residue.  
