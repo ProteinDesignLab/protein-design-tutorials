@@ -87,7 +87,7 @@ srun remodel.linuxgccrelease @flags
 The Sherlock filesystem can seem easy to get lost in at first sight. The main drives that you will spend most of your time on are `/home/` and `/scratch/`.
 - `/home/users/[SUNet ID]/` is your home directory. This is where `~/` points to, where your bash profile lives, and where you can keep most of your storage and files.
 - `/scratch/users/[SUNet ID]/` is your scratch directory (like scratch paper). Your `$SCRATCH` variable points here, and this is where you should do most of your work, because read/write speeds are much faster on this drive than on the home directory. However, Sherlock automatically archives files on scratch that are older than 6 months, so you'll have to either `touch` your files to keep them updated, or port them over to your home directory to hold on to them.  
-- `/scratch/PI/possu/` is our group scratch directory. It's easy to keep things here that the group uses, or that you want to share with the group. We also usually build Rosetta here, which means it occasionally gets archived by the Sherlock scratch gobbler (and needs to be rebuilt).  
+- `/scratch/PI/possu/` is our group scratch directory. It's easy to keep things here that the group uses, or that you want to share with the group. We also usually build Rosetta here, which means it occasionally gets archived by the Sherlock scratch gobbler (and needs to be rebuilt).
 
 At some point, you will want to move files between Sherlock and your local machine. There are two main ways for doing this:
 - `scp` - This is the simplest and fastest for single files. You can use the `scp` Linux command in the same way you would use the `cp` command, except you will need to authenticate. The syntax would be `scp [SUNet ID]@login.sherlock.stanford.edu:[/path/to/file] [/path/to/save]`, and you can also copy from your local machine to Sherlock by switching the order of the two arguments.  
@@ -100,10 +100,14 @@ Sherlock is free to use for anyone with a Stanford affiliation, but it can be ha
 - `normal` - the general partition that any Stanford affiliate can use. It can be hard to get computing time on this partition.
 - `owners` - a collection of nodes available to all owners. When other owners aren't using their nodes, we can use their resources, but these jobs are automatically killed and restarted later when the original owners want to use their resources.
 - `possu` - five nodes that our lab owns, (sh-101, sh-102, TODO), each with 20 CPUs
+- `bioe` - five nodes of A40 40G GPUs (4 GPUs per node, except for node 16, which has 5 GPUs). These are shared by other Stanford Bioengineering labs
 - Other partitions you might encounter
   - `iric` - the SLAC partition that only Possu has personal access to.
   - `bigmem` - use when you need >64gb RAM
-  - TODO hns, gpu  
+  - `dev` - a partition of 65 GPUs, each available for up to 2 hours. These are particularly good for interactive sessions, as the GPUs are a bit slower and time is limited. This partition is shared by all of Sherlock users.
+  - `gpu` - GPUs available to all of Sherlock users, these are hard to obtain access to though, wait time can be long.
+
+To view what resources are available at any given time, simply run `sh_part` in the Terminal window. This will let you know what nodes, GPUs, CPUs etc. are available, in queue, and in use. This can be useful for planning which partition to submit a job to as well.
 
 These are listed in descending order of how many people share the partition, and therefore ascending order of how easy it is to get computing time. Ideally, it is best to first try to submit jobs to partitions near the top of the list, but if it is hard to get jobs running, then you can move further and further down the list. We do most of our work on the `possu` and `owners` partitions.  
 
@@ -115,6 +119,9 @@ Additionally, since loading modules can have unexpected effects on your environm
 export PATH=$PATH:$GROUP_HOME/python/bin
 export PYTHONPATH=$GROUP_HOME/python/lib/python2.7/site-packages:$PYTHONPATH
 ```
+
+We have a shared lab miniconda in our $GROUP_HOME. We encouage you to build your enviornments in this miniconda, as it will save time and storage space. In addition, it allows our computational side of the lab to be more collaborative and efficient. Feel free to ask lab members for more details.
+
 To install a python2.7 package, use these commands:
 ```
 $ ml python/2.7.13
